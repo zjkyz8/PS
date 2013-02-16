@@ -1,12 +1,14 @@
 Function ParseIni ($filePath, $sectionName) {
-	switch -regex -file $file {
+	$ini = @{}
+	switch -regex -file $filePath {
     		"^\[(.+)\]$" {
-      		$section = $matches[1].Trim()
-      		$ini[$section] = @{}
-    	}
-    	"^\s*([^#].+?)\s*=\s*(.*)" {
-      		$name,$value = $matches[1..2]
-      		$ini[$section][$name] = $value.Trim()
-    	}  	
+      			$section = $matches[1].Trim()
+      			$ini[$section] = @{}
+		}
+    		"^\s*([^#].+?)\s*=\s*(.*)" {
+      			$name,$value = $matches[1..2]
+      			$ini[$section][$name] = $value.Trim()
+    		}
+	} 	
 	$ini[$sectionName]
 }
